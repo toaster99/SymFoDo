@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block javascripts %}
+	{{ parent() }}
+{% endblock %}
+
+{% block body %}
+    <div id="wrapper">
+		<h3>Tasks</h3>
+		<ul>
+			{% for task in tasks %}
+				<li>{{ task.getName() }}</li>
+			{% endfor %}
+		</ul>
+    </div>
+{% endblock %}
