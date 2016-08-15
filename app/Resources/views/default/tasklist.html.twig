@@ -5,7 +5,8 @@
 				    	<div>
 					    	<span class="task-completed">
 					    		<div>
-					    			<input onchange="updateTask({{key}}, true);" type="checkbox" {{ task.isCompleted() ? "checked='checked'" : ""}}>
+					    			<input id="task-completed-{{ key }}" onchange="updateTask({{key}}, true);" type="checkbox" {{ task.isCompleted() ? "checked='checked'" : ""}}>
+					    			<label class="task-label" for="task-completed-{{key}}"></label>
 					    		</div>
 					    	</span>
 					    	<input onkeyup="updateTask({{key}});" type="text" value="{{ task.getName() }}">
