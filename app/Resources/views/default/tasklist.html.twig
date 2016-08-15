@@ -1,0 +1,18 @@
+{% block taskList %}
+		<ul id="todoList">
+				{% for key,task in tasks %}
+				    <li id="task-item-{{ key }}"  data-index="{{ key }}">
+				    	<div>
+					    	<span class="task-completed">
+					    		<div>
+					    			<input onchange="updateTask({{key}}, true);" type="checkbox" {{ task.isCompleted() ? "checked='checked'" : ""}}>
+					    		</div>
+					    	</span>
+					    	<input onkeyup="updateTask({{key}});" type="text" value="{{ task.getName() }}">
+					    	<span class="task-delete fa-icon fa-trash" onclick="deleteTask({{ key }});">
+					    	</span>
+					    </div>
+				   	</li>
+				{% endfor %}
+		</ul>
+{% endblock %}

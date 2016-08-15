@@ -4,6 +4,7 @@
 	{{ parent() }}
 
 	<script src="{{ asset('js/index.js') }}"></script>
+	<script src="https://use.fontawesome.com/d409eefb1e.js"></script>
 {% endblock %}
 
 {% block stylesheets %}
@@ -24,29 +25,19 @@
 	    	<div id="todo-menu">
 	    		<div class="todo-content">
 	    			<ul id="todo-menu-list">
-	    				<li class="active" onclick="filterTodo(this,'all');">All</li>
-	    				<li onclick="filterTodo(this,'active');">Active</li>
-	    				<li onclick="filterTodo(this,'completed');">Completed</li>
+	    				<li class="active" onclick="filterTodo(this);" data-filter="all">All</li>
+	    				<li onclick="filterTodo(this);" data-filter="active">Active</li>
+	    				<li onclick="filterTodo(this);" data-filter="completed">Completed</li>
+	    			</ul>
+	    			<ul id="todo-action-list">
+	    				<li><span class="fa-icon fa-check" onclick="toggleAllCompletion();" title="Toggle completion of all tasks"></span></li>
+	    				<li><span class="fa-icon fa-trash-o" onclick="deleteCompleted();" title="Delete completed tasks"></span></li>
 	    			</ul>
 	    		</div>
 	    	</div>
 	    	<div id="todo-tasks">
-	    		<div class="todo-content">
-					<ul id="todoList">
-					{# iterate over each existing tag and render its only field: name #}
-					{% for task in tasks %}
-					    <li>
-					    	<div>
-						    	<span class="task-completed">
-						    		<div>
-						    			<input type="checkbox" {{ task.isCompleted() ? "checked='checked'" : ""}}>
-						    		</div>
-						    	</span>
-						    	{{ task.getName() }}
-						    </div>
-					   	</li>
-					{% endfor %}
-					</ul>
+	    		<div class="todo-content" id="todo-tasks-list">
+					{% include 'default/tasklist.html.twig' %}
 				</div>
 			</div>
 		</div>

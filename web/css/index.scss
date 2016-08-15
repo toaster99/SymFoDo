@@ -29,7 +29,7 @@ $task-color: #8e8d8d;
 
 			font-size: 2em;
 			background-color: $secondary-color;
-			color: $primary-color;
+			color: $task-color;
 
 			padding-left: .5em;
 			padding-right: .5em;
@@ -46,8 +46,42 @@ $task-color: #8e8d8d;
 
 		padding: .5em 0;
 
-		ul {
+		position: relative;
+
+		ul#todo-action-list {
 			list-style: none;
+			font-family: FontAwesome;
+			position: relative;
+
+			padding: 0;
+			margin-top: 0;
+			margin-bottom: 0;
+
+			text-align: center;
+			li {
+				display: inline-block;
+
+				color: $primary-color;
+
+				font-size: 1em;
+
+				margin: 0 .2em;
+
+				cursor: pointer;
+			}
+
+			li:hover {
+				color: red;
+			}
+		}
+
+		ul#todo-menu-list {
+			list-style: none;
+			padding: 0;
+
+			text-align: center;
+
+			margin-bottom: 2em;
 
 			li {
 				display: inline-block;
@@ -95,6 +129,17 @@ $task-color: #8e8d8d;
 				visibility: visible;
 			}
 		}
+	}
+
+	h2 {
+		color: $task-color;
+		font-weight: lighter;
+
+		font-size: 1.5em;
+
+		text-align: center;
+
+		margin-top: 2em;
 	}
 
 	#todo-tasks {
@@ -163,6 +208,8 @@ $task-color: #8e8d8d;
 				input:checked:after {
 					content: "✓";
 					font-size: 1.3em;
+
+					margin-right: -.5em;
 				}
 
 				input:not(:checked):after {
@@ -185,9 +232,36 @@ $task-color: #8e8d8d;
 			justify-content:center;
 			align-items: center;
 
-			content: 'P';
+			font-family: FontAwesome;
 
-			color: black;
+			color: $task-color;
+
+			content: '\f1f8';
+
+			z-index: 2;
+		}
+
+		.task-delete {
+			position: absolute;
+			right: 0px;
+			top: 0px;
+			bottom: 0px;
+
+			display: flex;
+			justify-content:center;
+			align-items: center;
+
+			font-family: FontAwesome;
+
+			color: transparent;
+
+			z-index: 3;
+
+			cursor: pointer;
+		}
+
+		.task-delete:hover {
+			color: red;
 		}
 
 	}

@@ -8,7 +8,7 @@ class Todo {
   protected $tasks;
 
   function __construct() {
-    $this->tasks = new ArrayCollection();
+    $this->tasks = array();
   }
   public function getTasks() {
     return $this->tasks;
