@@ -19,9 +19,12 @@ use AppBundle\EntityManager\TaskManager;
 
 class DefaultController extends Controller
 {
-    /**
-     * @Route("/", name="homepage")
-     */
+  /**
+   * Purpose: Handles calls to the index of the application. Returns
+   * the index page and passes the tasks along to twig.
+   *
+   * @Route("/", name="homepage")
+   */
     public function indexAction(Request $request)
     {
       return $this->render('default/index.html.twig', array(
@@ -30,8 +33,9 @@ class DefaultController extends Controller
     }
 
  /**
-  * Route used to get all the tasks and returns the rendered task
+  * Purpose: Route used to get all the tasks and returns the rendered task
   * view.
+  *
   * @Route("/todo/all", name="all-tasks")
   */
     public function allTasksAction(Request $request) {
@@ -41,8 +45,9 @@ class DefaultController extends Controller
     }
 
   /**
-  * Route used to get only the completed tasks and returns the rendered task
+  * Purpose: Route used to get only the completed tasks and returns the rendered task
   * view.
+  *
   * @Route("/todo/completed", name="completed-tasks")
   */
     public function completedTasksAction(Request $request) {
@@ -52,8 +57,9 @@ class DefaultController extends Controller
     }
 
     /**
-    * Route used to get only the active tasks and returns the rendered task
+    * Purpose: Route used to get only the active tasks and returns the rendered task
     * view.
+    *
     * @Route("/todo/active", name="active-tasks")
     */
     public function activeTasksAction(Request $request) {
@@ -63,7 +69,15 @@ class DefaultController extends Controller
     }
 
     /**
-    * Update an existing task
+    * Purpose: Updates an existing task and saves it. 
+    *
+    * Parameters:
+    *   - index: The task to update
+    *   - name (POST): The name of the task
+    *   - completed (POST): Boolean indicating if the task is complete
+    *
+    * Returns:
+    *   - The updated task JSON encoded
     * @Route("/todo/update/{index}", name="active-task")
     */
     public function updateTaskAction($index, Request $request) {
@@ -82,8 +96,14 @@ class DefaultController extends Controller
       return $response;
     }
 
-    /**
-    * Update an existing task
+   /**
+    * Purpose: Deletes an existing task.
+    *
+    * Parameters:
+    *   - index: The task to delete
+    *
+    * Returns:
+    *   - Empty array
     * @Route("/todo/delete/{index}", name="delete-task")
     */
     public function deleteTaskAction($index, Request $request) {
@@ -96,8 +116,15 @@ class DefaultController extends Controller
       return $response;
     }
 
-    /**
-    * Add a new task to the todo
+   /**
+    * Purpose: Adds a new task and saves it
+    *
+    * Parameters:
+    *   - index: The task to update
+    *   - name (POST): The name of the task
+    *
+    * Returns:
+    *   - The updated task JSON encoded
     * @Route("/todo/add", name="add-task")
     */
     public function addTaskAction(Request $request) {
@@ -119,19 +146,19 @@ class DefaultController extends Controller
 
 
 
-    /**
-    ** Grabs the tasks from the TaskManager
-    **
+   /**
+    * Purpose: Loads tasks from the TaskManager and optionally
+    * filters them
+    *
+    * Parameters:
+    *   - filter: The filter to apply, can be "all", "active", or "completed"
+    *
+    * Returns:
+    *   - The array of task objects
+    *
     */
     private function getTasks($filter="all") {
-      $todo = new Todo();
       $taskList = TaskManager::getAllTasks($this->get('session'));
-      if(isset($taskList)) {
-        $todo->setTasks($taskList);
-      }
-      else {
-        $taskList = $todo->getTasks();
-      }
 
       if($filter == "active") {
         $taskList = array_filter($taskList, function($task) {

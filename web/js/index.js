@@ -35,6 +35,11 @@ jQuery(document).ready(function() {
         }
     });
 
+    //
+    // Purpose: Adds a task through AJAX and updates the list
+    //
+    // Parameters: 
+    //      taskName - The name of the task to add
     function addTodoTask(taskName) {
         $.ajax({
           type: "POST",
@@ -49,13 +54,26 @@ jQuery(document).ready(function() {
     }
 });
 
-function filterTodo(caller,filterType='all') {
+//
+// Purpose: Called when one of the filter options is selected. 
+//          Removes the active class from all options, and then 
+//          adds to the selected option. Then refreshes task list
+//
+// Parameters: 
+//      caller - The element that called the function
+function filterTodo(caller) {
     $("#todo-menu-list").find("li").removeClass("active");
     $(caller).addClass("active");
 
     refreshTasks();
 }
 
+//
+// Purpose: Uses AJAX to refresh the task list. Determines the filter to use,
+//          and animates the change if requested.
+//
+// Parameters: 
+//      animation - If true, the task list will use jQuery hide/show to animate in/out
 function refreshTasks(animation = true) {
     var filterMethod = $($("#todo-menu-list").find(".active")).attr("data-filter");
 
@@ -81,6 +99,14 @@ function refreshTasks(animation = true) {
     }); 
 }
 
+//
+// Purpose: Called when a task's value has changed (name or completed). Launches a timeout
+//          to initiate the update, and ignores any future calls until the timeout is completed.
+//          This is intended to reduce server strain if a database was used instead of session variables
+//
+// Parameters: 
+//      taskIndex - The index of the task being updates
+//      ignoreTimeout - If true, the task is updated regardless of the last update time
 function updateTask(taskIndex, ignoreTimeout = false) {
     if((Date.now() - lastKeyPress) >= KEYPRESS_DELAY && !ignoreTimeout)
     {
@@ -95,6 +121,11 @@ function updateTask(taskIndex, ignoreTimeout = false) {
     return;
 }
 
+//
+// Purpose: Uses AJAX to update a task.
+//
+// Parameters: 
+//      taskIndex - The index of the task being updated
 function updateTaskSave(taskIndex) {
     var taskLi = $("#task-item-" + taskIndex);
 
@@ -115,6 +146,11 @@ function updateTaskSave(taskIndex) {
     }); 
 }
 
+//
+// Purpose: Uses AJAX to delete a task, and then refreshes the task list
+//
+// Parameters: 
+//      taskIndex - The index of the task being deleted
 function deleteTask(taskIndex) {
     var url = "/todo/delete/" + taskIndex;
 
@@ -127,6 +163,9 @@ function deleteTask(taskIndex) {
     });  
 }
 
+//
+// Purpose: Either completes or un-completes all tasks
+//
 function toggleAllCompletion() {
     $('#todoList').find('li').each(function() {
         $($(this).find(":checkbox")[0]).prop("checked", (markAllAsCompleted ? "checked" : ""));
@@ -136,6 +175,9 @@ function toggleAllCompletion() {
     markAllAsCompleted = !markAllAsCompleted;
 }
 
+//
+// Purpose: Deletes all tasks that are completed
+//
 function deleteCompleted() {
     $('#todoList').find('li').each(function() {
         var isChecked = $($(this).find(":checkbox")[0]).prop("checked");
